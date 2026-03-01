@@ -6,12 +6,10 @@ import {
   Gear,
   ClockCounterClockwise,
   CaretRight,
-  Desktop,
   Cpu,
-  ShieldCheck,
-  Command,
   Rows,
-  List
+  List,
+  X
 } from '@phosphor-icons/react';
 import { Dropzone } from '@/components/optimizer/Dropzone';
 import { AssetList } from '@/components/optimizer/AssetList';
@@ -44,35 +42,41 @@ const App: React.FC = () => {
       {/* Premium Laboratory Sidebar */}
       <aside
         className={cn(
-          "fixed md:relative inset-y-0 left-0 z-50 h-screen border-r border-lab bg-lab-surface/90 md:bg-lab-surface/50 backdrop-blur-xl md:backdrop-blur-md flex flex-col transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          "fixed md:relative inset-y-0 left-0 z-50 h-[100dvh] border-r border-lab bg-lab-surface/90 md:bg-lab-surface/50 backdrop-blur-xl md:backdrop-blur-md flex flex-col transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto md:overflow-visible",
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-          isSidebarCollapsed ? "md:w-20" : "w-72 md:w-72"
+          isSidebarCollapsed ? "w-[280px] md:w-20" : "w-[280px] md:w-72"
         )}
       >
         {/* Toggle Button */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="absolute -right-3 top-12 w-6 h-6 rounded-full bg-lab-surface border border-lab flex items-center justify-center text-primary shadow-lg hover:scale-110 transition-transform"
+          className="hidden md:flex absolute -right-3 top-12 w-6 h-6 rounded-full bg-lab-surface border border-lab items-center justify-center text-primary shadow-lg hover:scale-110 transition-transform"
         >
           <CaretRight size={12} className={cn("transition-transform duration-500", !isSidebarCollapsed && "rotate-180")} />
         </button>
 
-        <div className="p-6 flex items-center gap-4 mb-10 overflow-hidden">
-          <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-600 flex items-center justify-center shadow-lg shadow-primary/20">
-            <Lightning weight="fill" size={24} className="text-white" />
+        <div className="p-6 flex items-center justify-between gap-4 mb-10 overflow-hidden">
+          <div className="flex items-center gap-4">
+            <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-600 flex items-center justify-center shadow-lg shadow-primary/20">
+              <Lightning weight="fill" size={24} className="text-white" />
+            </div>
+            <div
+              className={cn("flex flex-col whitespace-nowrap transition-all duration-300", isSidebarCollapsed ? "md:opacity-0 md:-translate-x-2 md:w-0" : "opacity-100 translate-x-0 w-auto")}
+            >
+              <span className="text-lg font-black tracking-tighter uppercase italic leading-none">Swift Asset</span>
+              <span className="text-[9px] font-bold text-primary tracking-[0.3rem] uppercase opacity-70">Core Engine</span>
+            </div>
           </div>
-          <motion.div
-            initial={false}
-            animate={{ opacity: isSidebarCollapsed ? 0 : 1, x: isSidebarCollapsed ? -10 : 0 }}
-            className="flex flex-col whitespace-nowrap"
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="md:hidden p-2 rounded-lg text-lab-muted hover:text-lab-bright hover:bg-white/5 transition-colors shrink-0"
           >
-            <span className="text-lg font-black tracking-tighter uppercase italic leading-none">Swift Asset</span>
-            <span className="text-[9px] font-bold text-primary tracking-[0.3rem] uppercase opacity-70">Core Engine</span>
-          </motion.div>
+            <X size={20} />
+          </button>
         </div>
 
         <div className="px-4 space-y-1.5 flex-1">
-          <div className={cn("px-3 mb-4 text-[10px] font-bold text-lab-muted uppercase tracking-widest transition-opacity", isSidebarCollapsed && "opacity-0 invisible")}>
+          <div className={cn("px-3 mb-4 text-[10px] font-bold text-lab-muted uppercase tracking-widest transition-opacity", isSidebarCollapsed && "md:opacity-0 md:invisible")}>
             Laboratory
           </div>
           {[
@@ -94,12 +98,11 @@ const App: React.FC = () => {
               )}
             >
               <div className="shrink-0 w-8 flex justify-center">{item.icon}</div>
-              <motion.span
-                animate={{ opacity: isSidebarCollapsed ? 0 : 1, x: isSidebarCollapsed ? -10 : 0 }}
-                className="font-bold text-sm ml-3 whitespace-nowrap"
+              <span
+                className={cn("font-bold text-sm ml-3 whitespace-nowrap transition-all duration-300", isSidebarCollapsed ? "md:opacity-0 md:-translate-x-2 md:w-0 md:overflow-hidden" : "opacity-100 translate-x-0 w-auto")}
               >
                 {item.label}
-              </motion.span>
+              </span>
 
               {activeTab === item.id && (
                 <motion.div
@@ -111,38 +114,7 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        <div className="p-4 mt-auto">
-          {!isSidebarCollapsed && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="p-5 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-lab/50 mb-6 group cursor-help"
-            >
-              <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest mb-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Privacy First
-              </div>
-              <p className="text-[11px] text-lab-muted leading-relaxed group-hover:text-lab-bright transition-colors">
-                All processing is <strong>strictly local</strong>. Your data never leaves this browser.
-              </p>
-            </motion.div>
-          )}
 
-          <div className={cn(
-            "flex items-center gap-4 text-lab-muted hover:text-primary transition-all group cursor-pointer p-3 rounded-xl hover:bg-white/5",
-            isSidebarCollapsed && "justify-center"
-          )}>
-            <div className="shrink-0 w-10 h-10 rounded-full bg-lab-surface flex items-center justify-center border border-lab group-hover:border-primary/50 transition-all group-hover:rotate-12">
-              <Desktop size={18} />
-            </div>
-            {!isSidebarCollapsed && (
-              <div className="flex flex-col overflow-hidden">
-                <span className="text-xs font-bold whitespace-nowrap">Lab Console v2</span>
-                <span className="text-[10px] opacity-50">Authorized Personnel</span>
-              </div>
-            )}
-          </div>
-        </div>
       </aside>
 
       {/* Main Content Area */}
@@ -168,19 +140,6 @@ const App: React.FC = () => {
               {activeTab === 'history' && <>Action <br /> <span className="text-primary tracking-[-0.05em] drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">Log</span></>}
               {activeTab === 'config' && <>Engine <br /> <span className="text-primary tracking-[-0.05em] drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">Setup</span></>}
             </h1>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="hidden xl:flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/5 border border-lab">
-              <div className="flex flex-col text-right">
-                <span className="text-[10px] font-bold text-lab-muted uppercase tracking-widest">Protocol</span>
-                <span className="text-xs font-black italic">SECURE_SANDBOX_01</span>
-              </div>
-              <ShieldCheck weight="fill" size={24} className="text-emerald-500" />
-            </div>
-            <button className="w-12 h-12 rounded-2xl bg-white/5 border border-lab flex items-center justify-center hover:bg-primary/20 hover:border-primary/50 transition-all text-lab-muted hover:text-primary">
-              <Command size={20} />
-            </button>
           </div>
         </header>
 

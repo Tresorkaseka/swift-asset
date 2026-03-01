@@ -52,7 +52,7 @@ export const Dropzone: React.FC = () => {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={cn(
-                    "relative h-[300px] md:h-[480px] w-full glass-lab border-2 border-dashed transition-all duration-700 flex flex-col items-center justify-center cursor-pointer group overflow-hidden",
+                    "relative h-[340px] md:h-[480px] w-full glass-lab border-2 border-dashed transition-all duration-700 flex flex-col items-center justify-center cursor-pointer group overflow-hidden",
                     isDragOver ? "border-primary bg-primary/10 scale-[1.005] shadow-[0_0_50px_rgba(6,182,212,0.1)]" : "border-lab hover:border-primary/40"
                 )}
                 onClick={() => fileInputRef.current?.click()}
@@ -93,19 +93,19 @@ export const Dropzone: React.FC = () => {
                     accept="image/*,.svg"
                 />
 
-                <div className="relative z-20 flex flex-col items-center text-center px-10">
+                <div className="relative z-20 flex flex-col items-center text-center px-4 md:px-10">
                     <motion.div
                         animate={isDragOver ? { scale: 1.2, rotate: 5 } : { scale: 1, rotate: 0 }}
-                        className="w-24 h-24 rounded-3xl bg-white/5 border border-lab flex items-center justify-center text-primary mb-10 shadow-2xl relative"
+                        className="w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl bg-white/5 border border-lab flex items-center justify-center text-primary mb-6 md:mb-10 shadow-2xl relative shrink-0"
                     >
-                        <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <CloudArrowUp weight="duotone" size={42} className="relative z-10" />
+                        <div className="absolute inset-0 bg-primary/20 blur-xl md:blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <CloudArrowUp weight="duotone" className="relative z-10 w-8 md:w-[42px] h-8 md:h-[42px]" />
                     </motion.div>
 
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic mb-4 leading-none transition-all">
+                    <h2 className="text-2xl md:text-5xl font-black tracking-tighter uppercase italic mb-3 md:mb-4 leading-none transition-all">
                         Initiate <span className="text-primary italic">Transfer.</span>
                     </h2>
-                    <p className="text-lab-muted text-xs md:text-sm max-w-sm leading-relaxed font-medium mb-10 md:mb-12">
+                    <p className="text-lab-muted text-xs md:text-sm max-w-sm leading-relaxed font-medium mb-8 md:mb-12">
                         Drag and drop your raw assets into the processing chamber. <br className="hidden md:block" />
                         Our <span className="text-lab-bright underline decoration-primary/50 underline-offset-4 font-bold">V-Matrix</span> handles the heavy lifting.
                     </p>
@@ -124,10 +124,10 @@ export const Dropzone: React.FC = () => {
                 </div>
 
                 {/* Corner Accents */}
-                <div className="absolute top-8 left-8 w-6 h-6 border-t-2 border-l-2 border-primary/50" />
-                <div className="absolute top-8 right-8 w-6 h-6 border-t-2 border-r-2 border-primary/50" />
-                <div className="absolute bottom-8 left-8 w-6 h-6 border-b-2 border-l-2 border-primary/50" />
-                <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-primary/50" />
+                <div className="absolute top-4 left-4 md:top-8 md:left-8 w-4 h-4 md:w-6 md:h-6 border-t-2 border-l-2 border-primary/50" />
+                <div className="absolute top-4 right-4 md:top-8 md:right-8 w-4 h-4 md:w-6 md:h-6 border-t-2 border-r-2 border-primary/50" />
+                <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 w-4 h-4 md:w-6 md:h-6 border-b-2 border-l-2 border-primary/50" />
+                <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 w-4 h-4 md:w-6 md:h-6 border-b-2 border-r-2 border-primary/50" />
 
                 {/* Status Line */}
                 <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
